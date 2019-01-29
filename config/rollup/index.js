@@ -3,7 +3,7 @@ const nodeResolve = require('rollup-plugin-node-resolve');
 const babel = require('rollup-plugin-babel');
 const json = require('rollup-plugin-json');
 const commonjs = require('rollup-plugin-commonjs');
-const svgr = require('@svgr/rollup');
+const svgr = require('@svgr/rollup').default;
 const {svgOptions} = require('@shopify/images/optimize');
 
 const {dependencies, peerDependencies} = require('../../package.json');
