@@ -210,11 +210,10 @@ function Icon({
     contentMarkup = <div className={styles.Placeholder} />;
   } else if (React.isValidElement(source)) {
     contentMarkup = source;
+  } else if (typeof source === 'string' && isBundledIcon(source)) {
+    contentMarkup = BUNDLED_ICONS[source];
   } else {
-    const iconSource =
-      typeof source === 'string' && isBundledIcon(source)
-        ? BUNDLED_ICONS[source]
-        : source;
+    const iconSource = source as SVGSource;
     contentMarkup = iconSource &&
       iconSource.viewBox &&
       iconSource.body && (
