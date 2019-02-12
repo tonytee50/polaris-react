@@ -158,7 +158,7 @@ class TextField extends React.PureComponent<CombinedProps, State> {
   render() {
     const {
       id = this.state.id,
-      value = '',
+      value,
       placeholder,
       disabled,
       readOnly,
@@ -194,11 +194,13 @@ class TextField extends React.PureComponent<CombinedProps, State> {
       polaris: {intl},
     } = this.props;
 
+    const normalizedValue = value != null ? value : '';
+
     const {height} = this.state;
 
     const className = classNames(
       styles.TextField,
-      Boolean(value) && styles.hasValue,
+      Boolean(normalizedValue) && styles.hasValue,
       disabled && styles.disabled,
       readOnly && styles.readOnly,
       error && styles.error,
@@ -220,7 +222,7 @@ class TextField extends React.PureComponent<CombinedProps, State> {
       </div>
     ) : null;
 
-    const characterCount = value.length;
+    const characterCount = normalizedValue.length;
     const characterCountLabel = intl.translate(
       maxLength
         ? 'Polaris.TextField.characterCountWithMaxLength'
@@ -262,7 +264,7 @@ class TextField extends React.PureComponent<CombinedProps, State> {
 
     const resizer = multiline ? (
       <Resizer
-        contents={value || placeholder}
+        contents={normalizedValue || placeholder}
         currentHeight={height}
         minimumLines={typeof multiline === 'number' ? multiline : 1}
         onHeightChange={this.handleExpandingResize}
@@ -300,7 +302,7 @@ class TextField extends React.PureComponent<CombinedProps, State> {
       readOnly,
       role,
       autoFocus,
-      value,
+      value: normalizedValue,
       placeholder,
       onFocus,
       onBlur,
