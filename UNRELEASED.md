@@ -13,6 +13,7 @@ Use [the changelog guidelines](https://git.io/polaris-changelog-guidelines) to f
 ### Bug fixes
 
 - Move character counter to bottom of multiline text input ([#992](https://github.com/Shopify/polaris-react/pull/992))
+- Removed left margin from vertical `Stack` to prevent overflow ([#1024](https://github.com/Shopify/polaris-react/pull/1024))
 
 ### Documentation
 
