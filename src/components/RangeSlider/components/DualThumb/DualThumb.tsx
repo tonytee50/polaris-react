@@ -307,6 +307,25 @@ export default class DualThumb extends React.Component<Props, State> {
   }
 
   @autobind
+  private handleMouseDownTrack(event: React.MouseEvent) {
+    if (event.button !== 0) return;
+    const clickXPosition = this.actualXPosition(event.clientX);
+    const {value} = this.state;
+    const distanceFromLowerThumb = Math.abs(value[0] - clickXPosition);
+    const distanceFromUpperThumb = Math.abs(value[1] - clickXPosition);
+
+    const centeredXPosition = clickXPosition - THUMB_SIZE * 1.5;
+
+    if (distanceFromLowerThumb <= distanceFromUpperThumb) {
+      this.setValue([centeredXPosition, value[1]], Control.Upper);
+      registerMouseMoveHandler(this.handleMouseMoveThumbLower);
+    } else {
+      this.setValue([value[0], centeredXPosition], Control.Lower);
+      registerMouseMoveHandler(this.handleMouseMoveThumbUpper);
+    }
+  }
+
+  @autobind
   private handleKeypressLower(event: React.KeyboardEvent<HTMLButtonElement>) {
     const {incrementValueLower, decrementValueLower} = this;
 
@@ -402,23 +421,6 @@ export default class DualThumb extends React.Component<Props, State> {
         },
         this.dispatchValue,
       );
-    }
-  }
-
-  @autobind
-  private handleMouseDownTrack(event: React.MouseEvent) {
-    if (event.button !== 0) return;
-    const clickXPosition = this.actualXPosition(event.clientX);
-    const {value} = this.state;
-    const distanceFromLowerThumb = Math.abs(value[0] - clickXPosition);
-    const distanceFromUpperThumb = Math.abs(value[1] - clickXPosition);
-
-    if (distanceFromLowerThumb <= distanceFromUpperThumb) {
-      this.setValue([clickXPosition, value[1]], Control.Upper);
-      registerMouseMoveHandler(this.handleMouseMoveThumbLower);
-    } else {
-      this.setValue([value[0], clickXPosition], Control.Lower);
-      registerMouseMoveHandler(this.handleMouseMoveThumbUpper);
     }
   }
 
